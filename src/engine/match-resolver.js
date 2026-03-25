@@ -1,12 +1,11 @@
 /**
  * match-resolver.js — Detects qualifying clears from a BoardState.
  *
- * Clearing rule (per spec FR-003):
+ * Clearing rule:
  *   A run of ≥ MATCH_MIN_LENGTH same sweet type in a row or column clears
- *   ALL tiles of that type in the ENTIRE row or column.
+ *   only the ADJACENT cells in that run.
  *
- * Returns one MatchGroup per (axis, type, line-index) combination.
- * A single position can appear in at most one row group and one column group.
+ * Returns one MatchGroup per contiguous run.
  */
 
 import {
@@ -48,9 +47,6 @@ export function findMatches(boardState) {
   const { tiles, width, height } = boardState;
   const groups = [];
 
-  // Deduplicate: each (axis, line-index, sweetType) emits at most one group.
-  const emitted = new Set();
-
   // ── Row sweeps ────────────────────────────────────────────────────────────
   for (let y = 0; y < height; y++) {
     let runStart = 0;
@@ -63,35 +59,24 @@ export function findMatches(boardState) {
         const runLen = x - runStart;
         if (runLen >= MATCH_MIN_LENGTH) {
           const type = tiles[idx(width, runStart, y)].sweetType;
-          const key = `row-${y}-${type}`;
-          if (!emitted.has(key)) {
-            emitted.add(key);
 
-            const anchorCells = [];
-            for (let ax = runStart; ax < x; ax++) anchorCells.push({ x: ax, y });
+          const anchorCells = [];
+          for (let ax = runStart; ax < x; ax++) anchorCells.push({ x: ax, y });
 
-            // All tiles of this type in entire row
-            const clearedCells = [];
-            for (let cx = 0; cx < width; cx++) {
-              if (tiles[idx(width, cx, y)].sweetType === type) {
-                clearedCells.push({ x: cx, y });
-              }
-            }
-
-            const clearedCount = clearedCells.length;
-            const awardsSpecial = clearedCount >= SPECIAL_REWARD_THRESHOLD;
-            groups.push({
-              axis: MatchAxis.ROW,
-              matchedSweetType: type,
-              anchorCells,
-              clearedCells,
-              clearedCount,
-              awardsSpecial,
-              awardedSpecialType: awardsSpecial
-                ? specialTypeFor(MatchAxis.ROW, clearedCount)
-                : null,
-            });
-          }
+          const clearedCells = anchorCells.slice();
+          const clearedCount = clearedCells.length;
+          const awardsSpecial = clearedCount >= SPECIAL_REWARD_THRESHOLD;
+          groups.push({
+            axis: MatchAxis.ROW,
+            matchedSweetType: type,
+            anchorCells,
+            clearedCells,
+            clearedCount,
+            awardsSpecial,
+            awardedSpecialType: awardsSpecial
+              ? specialTypeFor(MatchAxis.ROW, clearedCount)
+              : null,
+          });
         }
         runStart = x;
       }
@@ -110,35 +95,24 @@ export function findMatches(boardState) {
         const runLen = y - runStart;
         if (runLen >= MATCH_MIN_LENGTH) {
           const type = tiles[idx(width, x, runStart)].sweetType;
-          const key = `col-${x}-${type}`;
-          if (!emitted.has(key)) {
-            emitted.add(key);
 
-            const anchorCells = [];
-            for (let ay = runStart; ay < y; ay++) anchorCells.push({ x, y: ay });
+          const anchorCells = [];
+          for (let ay = runStart; ay < y; ay++) anchorCells.push({ x, y: ay });
 
-            // All tiles of this type in entire column
-            const clearedCells = [];
-            for (let cy = 0; cy < height; cy++) {
-              if (tiles[idx(width, x, cy)].sweetType === type) {
-                clearedCells.push({ x, y: cy });
-              }
-            }
-
-            const clearedCount = clearedCells.length;
-            const awardsSpecial = clearedCount >= SPECIAL_REWARD_THRESHOLD;
-            groups.push({
-              axis: MatchAxis.COLUMN,
-              matchedSweetType: type,
-              anchorCells,
-              clearedCells,
-              clearedCount,
-              awardsSpecial,
-              awardedSpecialType: awardsSpecial
-                ? specialTypeFor(MatchAxis.COLUMN, clearedCount)
-                : null,
-            });
-          }
+          const clearedCells = anchorCells.slice();
+          const clearedCount = clearedCells.length;
+          const awardsSpecial = clearedCount >= SPECIAL_REWARD_THRESHOLD;
+          groups.push({
+            axis: MatchAxis.COLUMN,
+            matchedSweetType: type,
+            anchorCells,
+            clearedCells,
+            clearedCount,
+            awardsSpecial,
+            awardedSpecialType: awardsSpecial
+              ? specialTypeFor(MatchAxis.COLUMN, clearedCount)
+              : null,
+          });
         }
         runStart = y;
       }

@@ -127,7 +127,7 @@ Static web app: `index.html` at root, `src/` for modules, `public/` for hosted a
 - [X] T041 [P] Write unit tests for progress store and migrations in `tests/unit/storage.test.js`: fresh install default, round-trip save and load, schema migration from v0 to current, corrupt-data fallback to default
 - [X] T042 Write Playwright e2e test for mobile match-turn flow in `tests/e2e/mobile-play.spec.js`: viewport 390×844, launch level 1, perform a valid swap, assert board updates; perform an invalid swap, assert board reverts
 - [X] T043 Write Playwright e2e test for persistence and offline in `tests/e2e/offline.spec.js`: complete level 1, reload page, assert progress restored; enable offline mode, reload, assert app-shell loads and level select appears
-- [ ] T044 Run manual quickstart validation scenarios from `specs/001-match-three-clone/quickstart.md` and confirm all checkpoints pass
+- [X] T044 Run manual quickstart validation scenarios from `specs/001-match-three-clone/quickstart.md` and confirm all checkpoints pass
 
 ---
 
