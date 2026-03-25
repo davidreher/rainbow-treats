@@ -1,0 +1,192 @@
+/**
+ * layout.css — Responsive single-page shell and screen container layout.
+ * Mobile-first, centered, max-width capped for desktop.
+ */
+
+/* ── App shell ─────────────────────────────────────────────────────────────── */
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  width: 100%;
+}
+
+/* ── Screen visibility ─────────────────────────────────────────────────────── */
+.screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.screen[hidden] {
+  display: none;
+}
+
+.screen--modal {
+  position: fixed;
+  inset: 0;
+  max-width: unset;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: var(--z-modal);
+}
+
+/* ── HUD bar (game screen) ─────────────────────────────────────────────────── */
+.hud-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: var(--hud-height);
+  background: var(--color-surface-card);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  z-index: var(--z-hud);
+}
+
+.hud-level,
+.hud-score,
+.hud-moves,
+.hud-target {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.hud-level { flex: 0 0 auto; }
+.hud-score { flex: 1 1 auto; text-align: center; }
+.hud-moves { flex: 0 0 auto; }
+.hud-target { flex: 0 0 auto; font-size: 11px; }
+
+.hud-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hud-controls button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  background: var(--color-surface-tile);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 120ms ease;
+}
+
+.hud-controls button:active {
+  background: var(--color-surface-hover);
+}
+
+/* ── Level select header ───────────────────────────────────────────────────── */
+.hud-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 16px;
+  flex-shrink: 0;
+}
+
+.game-title {
+  font-size: clamp(24px, 8vw, 36px);
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+
+/* ── Level select grid ─────────────────────────────────────────────────────── */
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+/* ── Board wrapping area (game screen) ─────────────────────────────────────── */
+.board-wrap {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+/* ── Modal panel ───────────────────────────────────────────────────────────── */
+.modal-panel {
+  background: var(--color-surface-card);
+  border-radius: var(--ui-radius);
+  padding: 28px 24px;
+  width: min(90vw, 360px);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 22px;
+  color: var(--color-text-primary);
+}
+
+.modal-message {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 13px;
+  border-radius: var(--ui-radius);
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--color-surface-tile);
+  color: var(--color-text-primary);
+  transition: background 120ms ease;
+}
+
+.modal-actions button:active {
+  background: var(--color-surface-hover);
+}
+
+.modal-actions button.btn-primary {
+  background: var(--color-grape);
+}
+
+/* ── Toast container ───────────────────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  top: calc(var(--hud-height) + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  width: min(90vw, 360px);
+}
+
+/* ── Responsive desktop adjustment ────────────────────────────────────────── */
+@media (min-width: 540px) {
+  :root {
+    --tile-size: 52px;
+  }
+}

@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Static deployment only: solution runs as deployable static assets with no SSR,
+  backend, edge, or scheduled runtime requirements.
+- Local-first persistence only: all persisted state is browser-local, with
+  `localStorage` usage, failure modes, and migration approach documented.
+- Mobile-first PWA: primary flows are designed for small screens first and cover
+  installability, offline behavior, and accessible interaction patterns.
+- Dependency discipline: each new package is explicitly justified against a
+  browser-native or existing-tooling alternative.
+- Simplicity review: the chosen design is the smallest viable approach, and any
+  unavoidable complexity records the simpler rejected option.
 
 ## Project Structure
 
@@ -56,39 +65,31 @@ specs/[###-feature]/
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
+# [REMOVE IF UNUSED] Option 1: Static web app (DEFAULT)
 src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+├── app/
+├── components/
+├── storage/
+├── pwa/
+└── styles/
+
+public/
+├── icons/
+├── manifest.webmanifest
+└── offline assets
 
 tests/
-├── contract/
+├── e2e/
 ├── integration/
 └── unit/
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
+# [REMOVE IF UNUSED] Option 2: Single project library/tool
+src/
+├── lib/
+└── shared/
 
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+tests/
+└── unit/
 ```
 
 **Structure Decision**: [Document the selected structure and reference the real
@@ -100,5 +101,5 @@ directories captured above]
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| [e.g., Added package] | [specific browser/platform gap] | [why native API or existing tooling was insufficient] |
+| [e.g., Service worker caching layer] | [offline requirement] | [why simpler cache strategy was insufficient] |

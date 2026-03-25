@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2d1b4e" />
+  <meta name="description" content="Sweet Match — a mobile-first match-three puzzle game" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Sweet Match</title>
+
+  <link rel="manifest" href="public/manifest.webmanifest" />
+  <link rel="icon" href="public/icons/icon-192.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="public/icons/icon-192.svg" />
+
+  <link rel="stylesheet" href="src/styles/base.css" />
+  <link rel="stylesheet" href="src/styles/layout.css" />
+  <link rel="stylesheet" href="src/styles/board.css" />
+  <link rel="stylesheet" href="src/styles/motion.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Screen: Level Select -->
+    <section id="screen-level-select" class="screen" aria-label="Level select" hidden>
+      <header class="hud-header">
+        <h1 class="game-title">Sweet Match</h1>
+      </header>
+      <main id="level-grid" class="level-grid" role="list" aria-label="Levels"></main>
+    </section>
+
+    <!-- Screen: Game -->
+    <section id="screen-game" class="screen" aria-label="Game board" hidden>
+      <header class="hud-bar" role="region" aria-label="Game status">
+        <div class="hud-level" id="hud-level" aria-live="polite"></div>
+        <div class="hud-score" id="hud-score" aria-live="polite"></div>
+        <div class="hud-moves" id="hud-moves" aria-live="polite"></div>
+        <div class="hud-target" id="hud-target"></div>
+        <div class="hud-controls">
+          <button id="btn-pause" type="button" aria-label="Pause">⏸</button>
+          <button id="btn-retry" type="button" aria-label="Retry level">↺</button>
+          <button id="btn-exit" type="button" aria-label="Exit to level select">✕</button>
+        </div>
+      </header>
+      <main class="board-wrap">
+        <div id="board" class="board" role="grid" aria-label="Game board"></div>
+      </main>
+      <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+    </section>
+
+    <!-- Screen: Modal overlay -->
+    <section id="screen-modal" class="screen screen--modal" aria-label="Dialog" aria-modal="true" hidden>
+      <div class="modal-panel" role="dialog">
+        <h2 id="modal-title" class="modal-title"></h2>
+        <p id="modal-message" class="modal-message"></p>
+        <div id="modal-actions" class="modal-actions"></div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="src/app/bootstrap.js"></script>
+
+  <script>
+    // Service worker registration — skipped if unsupported
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('src/pwa/service-worker.js')
+          .catch(() => { /* offline capability unavailable — game still runs */ });
+      });
+    }
+  </script>
+</body>
+</html>

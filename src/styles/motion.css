@@ -1,0 +1,100 @@
+/**
+ * motion.css — Keyframe animations for all gameplay motion.
+ * All animations are disabled / reduced under prefers-reduced-motion.
+ */
+
+/* ── Keyframes ─────────────────────────────────────────────────────────────── */
+
+@keyframes tile-pop {
+  0%   { transform: scale(1);    opacity: 1; }
+  40%  { transform: scale(1.25); opacity: 0.8; }
+  100% { transform: scale(0);    opacity: 0; }
+}
+
+@keyframes tile-fall {
+  0%   { transform: translateY(-100%); opacity: 0.6; }
+  80%  { transform: translateY(4px); }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes tile-spawn {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes tile-shake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(6px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes tile-swap-back {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+/* ── Animation utility classes ─────────────────────────────────────────────── */
+
+.anim-shake {
+  animation: tile-shake var(--dur-shake) var(--ease-linear) both;
+}
+
+.anim-swap-back {
+  animation: tile-swap-back var(--dur-swap) var(--ease-pop) both;
+}
+
+/* ── Toast animations ──────────────────────────────────────────────────────── */
+.toast {
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  border-radius: var(--ui-radius);
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  animation: toast-in 200ms ease forwards;
+  pointer-events: auto;
+}
+
+.toast--exiting {
+  animation: toast-out 200ms ease forwards;
+}
+
+/* ── Reduced-motion overrides ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transition: none;
+  }
+
+  .tile--matched,
+  .tile--falling,
+  .tile--spawning,
+  .anim-shake,
+  .anim-swap-back {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .toast,
+  .toast--exiting {
+    animation: none;
+    opacity: 1;
+  }
+}

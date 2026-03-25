@@ -1,0 +1,108 @@
+/**
+ * base.css — CSS custom properties (design tokens), global reset, and body defaults.
+ * Mobile-first base at 360px viewport.
+ */
+
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  /* Sweet type colours */
+  --color-strawberry:    #e53935;
+  --color-lemon:         #fdd835;
+  --color-mint:          #43a047;
+  --color-grape:         #8e24aa;
+  --color-blueberry:     #1e88e5;
+  --color-orange:        #fb8c00;
+  --color-cream:         #f5e0c8;
+
+  /* Special sweet highlights */
+  --color-special-row:        #ff4081;
+  --color-special-col:        #00e5ff;
+  --color-special-same:       #ffd740;
+  --color-special-glow:       rgba(255, 255, 255, 0.85);
+
+  /* Surface and shell */
+  --color-surface:       #2d1b4e;
+  --color-surface-card:  #3d2460;
+  --color-surface-tile:  #4a2e72;
+  --color-surface-hover: #5c3a8a;
+  --color-border:        rgba(255, 255, 255, 0.08);
+
+  /* Text */
+  --color-text-primary:  #f3e8ff;
+  --color-text-secondary:#c8a8f0;
+  --color-text-muted:    #8060a0;
+  --color-text-on-tile:  #fff;
+
+  /* Shadows */
+  --shadow-tile:         0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-card:         0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-selected:     0 0 0 3px var(--color-special-glow), var(--shadow-tile);
+
+  /* Motion timing */
+  --dur-swap:     200ms;
+  --dur-pop:      250ms;
+  --dur-fall:     180ms;
+  --dur-spawn:    150ms;
+  --dur-shake:    320ms;
+  --ease-pop:     cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-fall:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-linear:  linear;
+
+  /* Layout */
+  --tile-size:    min(11vw, 52px);
+  --board-gap:    3px;
+  --ui-radius:    12px;
+  --hud-height:   56px;
+
+  /* Z layers */
+  --z-board:      1;
+  --z-hud:        10;
+  --z-toast:      20;
+  --z-modal:      30;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  height: 100%;
+  min-height: 100dvh;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-special-glow);
+  outline-offset: 2px;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  line-height: 1.2;
+}

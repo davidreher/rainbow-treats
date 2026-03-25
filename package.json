@@ -1,0 +1,20 @@
+{
+  "name": "sweet-match",
+  "version": "1.0.0",
+  "description": "Mobile-first match-three puzzle Progressive Web App",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:unit:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test": "vitest run && playwright test"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0",
+    "@vitest/coverage-v8": "^2.1.0",
+    "@playwright/test": "^1.49.0"
+  }
+}
