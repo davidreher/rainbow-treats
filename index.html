@@ -63,7 +63,7 @@
     // Service worker registration — skipped if unsupported
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/src/pwa/service-worker.js', { scope: '/' })
+        navigator.serviceWorker.register('./src/pwa/service-worker.js', { scope: './' })
           .catch(() => { /* offline capability unavailable — game still runs */ });
       });
     }
