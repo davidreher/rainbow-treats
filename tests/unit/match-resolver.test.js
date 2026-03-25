@@ -32,7 +32,7 @@ function boardFromRows(rows) {
 }
 
 describe('match resolver', () => {
-  it('detects row match and clears all same-type cells in that row', () => {
+  it('detects row match and clears only contiguous run cells', () => {
     const board = boardFromRows([
       'BCDEA',
       'AAABA',
@@ -45,11 +45,11 @@ describe('match resolver', () => {
     const rowGroup = groups.find(group => group.axis === 'row' && group.matchedSweetType === 'strawberry');
 
     expect(rowGroup).toBeTruthy();
-    expect(rowGroup.clearedCount).toBe(4);
+    expect(rowGroup.clearedCount).toBe(3);
     expect(rowGroup.awardsSpecial).toBe(false);
   });
 
-  it('detects column match and clears all same-type cells in that column', () => {
+  it('detects column match and clears only contiguous run cells', () => {
     const board = boardFromRows([
       'ABCDE',
       'AACDE',
@@ -125,5 +125,19 @@ describe('match resolver', () => {
 
     const groups = findMatches(board);
     expect(groups).toHaveLength(0);
+  });
+
+  it('handles multiple separated runs of same type in one row as separate groups', () => {
+    const board = boardFromRows([
+      'AAABAAA',
+      'BCDEBCD',
+      'CDEBCDE',
+      'DEBCDEB',
+      'EBCDEBC',
+    ]);
+
+    const groups = findMatches(board).filter(group => group.axis === 'row' && group.matchedSweetType === 'strawberry');
+    expect(groups).toHaveLength(2);
+    expect(groups.every(group => group.clearedCount === 3)).toBe(true);
   });
 });
