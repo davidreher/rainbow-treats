@@ -77,7 +77,11 @@
 
 .tile--matched {
   animation: tile-pop var(--dur-pop) var(--ease-pop) forwards;
-  filter: saturate(1.3) brightness(1.12);
+  filter: saturate(1.4) brightness(1.15);
+  box-shadow:
+    0 0 8px 2px rgba(255, 255, 255, 0.6),
+    0 0 18px 6px currentColor;
+  z-index: 3;
 }
 
 .tile--falling {

@@ -39,10 +39,10 @@
   --shadow-selected:     0 0 0 3px var(--color-special-glow), var(--shadow-tile);
 
   /* Motion timing */
-  --dur-swap:     200ms;
-  --dur-pop:      250ms;
-  --dur-fall:     180ms;
-  --dur-spawn:    150ms;
+  --dur-swap:     280ms;
+  --dur-pop:      320ms;
+  --dur-fall:     280ms;
+  --dur-spawn:    220ms;
   --dur-shake:    320ms;
   --ease-pop:     cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-fall:    cubic-bezier(0.4, 0, 0.2, 1);

@@ -22,9 +22,9 @@ import { applySpecialEffect }        from '../engine/special-sweets.js';
 import { BoardStatus, ALL_SWEET_TYPES, TileState } from '../engine/types.js';
 
 // Match motion.css animation durations
-const DUR_SWAP  = 150;  // brief swap preview before revert
-const DUR_POP   = 260;  // tile-pop animation
-const DUR_FALL  = 220;  // tile-fall + tile-spawn animation
+const DUR_SWAP  = 200;  // brief swap preview before revert
+const DUR_POP   = 340;  // tile-pop animation
+const DUR_FALL  = 330;  // tile-fall + tile-spawn animation
 
 export class GameController {
   /**
@@ -79,11 +79,8 @@ export class GameController {
       };
     }
 
-    // ── Valid swap: enter resolution cascade ─────────────────────────────────
+    // ── Valid swap: enter resolution cascade immediately ─────────────────────
     const phases = [];
-
-    // Phase 0: show the accepted swap
-    phases.push({ state: { ...swappedState, status: BoardStatus.SWAPPING }, duration: DUR_SWAP });
 
     let current     = { ...swappedState, status: BoardStatus.RESOLVING };
     let matches     = initialMatches;
