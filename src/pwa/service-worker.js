@@ -4,40 +4,42 @@
  * Cache-first app-shell strategy for offline relaunch.
  */
 
-const CACHE_NAME = 'sweet-match-v1';
+const CACHE_NAME = 'sweet-match-v2';
+const APP_SCOPE = self.registration.scope;
+const toAppUrl = (path = '') => new URL(path, APP_SCOPE).toString();
 const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/public/manifest.webmanifest',
-  '/public/icons/icon-192.png',
-  '/public/icons/icon-512.png',
+  toAppUrl(''),
+  toAppUrl('index.html'),
+  toAppUrl('public/manifest.webmanifest'),
+  toAppUrl('public/icons/icon-192.png'),
+  toAppUrl('public/icons/icon-512.png'),
 
-  '/src/styles/base.css',
-  '/src/styles/layout.css',
-  '/src/styles/board.css',
-  '/src/styles/motion.css',
+  toAppUrl('src/styles/base.css'),
+  toAppUrl('src/styles/layout.css'),
+  toAppUrl('src/styles/board.css'),
+  toAppUrl('src/styles/motion.css'),
 
-  '/src/app/bootstrap.js',
-  '/src/app/game-controller.js',
-  '/src/app/level-flow.js',
-  '/src/app/screen-router.js',
+  toAppUrl('src/app/bootstrap.js'),
+  toAppUrl('src/app/game-controller.js'),
+  toAppUrl('src/app/level-flow.js'),
+  toAppUrl('src/app/screen-router.js'),
 
-  '/src/components/board-view.js',
-  '/src/components/hud-view.js',
-  '/src/components/level-select-view.js',
-  '/src/components/modal-view.js',
-  '/src/components/toast-view.js',
+  toAppUrl('src/components/board-view.js'),
+  toAppUrl('src/components/hud-view.js'),
+  toAppUrl('src/components/level-select-view.js'),
+  toAppUrl('src/components/modal-view.js'),
+  toAppUrl('src/components/toast-view.js'),
 
-  '/src/engine/board-generator.js',
-  '/src/engine/gravity-engine.js',
-  '/src/engine/levels.js',
-  '/src/engine/match-resolver.js',
-  '/src/engine/scoring.js',
-  '/src/engine/special-sweets.js',
-  '/src/engine/types.js',
+  toAppUrl('src/engine/board-generator.js'),
+  toAppUrl('src/engine/gravity-engine.js'),
+  toAppUrl('src/engine/levels.js'),
+  toAppUrl('src/engine/match-resolver.js'),
+  toAppUrl('src/engine/scoring.js'),
+  toAppUrl('src/engine/special-sweets.js'),
+  toAppUrl('src/engine/types.js'),
 
-  '/src/storage/migrations.js',
-  '/src/storage/progress-store.js',
+  toAppUrl('src/storage/migrations.js'),
+  toAppUrl('src/storage/progress-store.js'),
 ];
 
 self.addEventListener('install', (event) => {
@@ -80,7 +82,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, cloned));
           return response;
         })
-        .catch(() => caches.match('/index.html'));
+        .catch(() => caches.match(toAppUrl('index.html')));
     })
   );
 });
