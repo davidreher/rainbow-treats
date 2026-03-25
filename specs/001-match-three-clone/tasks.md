@@ -114,19 +114,19 @@ Static web app: `index.html` at root, `src/` for modules, `public/` for hosted a
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## Phase 6: Polish & Cross-Cutting Concerns
 
 **Purpose**: Visual polish, accessibility, and verification coverage that improve all three stories.
 
-- [ ] T035 [P] Add candy-style visual layer to `src/styles/board.css`: layered radial gradients or SVG-based fill per sweet type using CSS custom properties; glow ring for `tile--selected`; burst opacity flash for `tile--matched`; shadow depth for resting tiles
-- [ ] T036 [P] Add accessibility improvements across all interactive components: ARIA labels on board tiles and controls; keyboard navigation for tile selection (arrow keys + Enter/Space); ensure HUD and modals announce score changes with live regions
-- [ ] T037 [P] Add app icon set to `public/icons/`: minimum sizes 192×192 and 512×512 PNG; update `manifest.webmanifest` icon references; verify install prompt appears in Chrome and Safari mobile
-- [ ] T038 [P] Write unit tests for match resolver in `tests/unit/match-resolver.test.js`: cases for row match, column match, simultaneous cross-axis match, exactly-three match, five-or-more match triggering special award, no-match board
-- [ ] T039 [P] Write unit tests for gravity engine in `tests/unit/gravity-engine.test.js`: cases for single gap, multi-gap column, full-column gap, spawn count equals gap count
-- [ ] T040 [P] Write unit tests for scoring and special sweets in `tests/unit/scoring.test.js`: base points per clear count, cascade multiplier, row-clear effect cell count, column-clear effect cell count, same-type-clear effect cell count
-- [ ] T041 [P] Write unit tests for progress store and migrations in `tests/unit/storage.test.js`: fresh install default, round-trip save and load, schema migration from v0 to current, corrupt-data fallback to default
-- [ ] T042 Write Playwright e2e test for mobile match-turn flow in `tests/e2e/mobile-play.spec.js`: viewport 390×844, launch level 1, perform a valid swap, assert board updates; perform an invalid swap, assert board reverts
-- [ ] T043 Write Playwright e2e test for persistence and offline in `tests/e2e/offline.spec.js`: complete level 1, reload page, assert progress restored; enable offline mode, reload, assert app-shell loads and level select appears
+- [X] T035 [P] Add candy-style visual layer to `src/styles/board.css`: layered radial gradients or SVG-based fill per sweet type using CSS custom properties; glow ring for `tile--selected`; burst opacity flash for `tile--matched`; shadow depth for resting tiles
+- [X] T036 [P] Add accessibility improvements across all interactive components: ARIA labels on board tiles and controls; keyboard navigation for tile selection (arrow keys + Enter/Space); ensure HUD and modals announce score changes with live regions
+- [X] T037 [P] Add app icon set to `public/icons/`: minimum sizes 192×192 and 512×512 PNG; update `manifest.webmanifest` icon references; verify install prompt appears in Chrome and Safari mobile
+- [X] T038 [P] Write unit tests for match resolver in `tests/unit/match-resolver.test.js`: cases for row match, column match, simultaneous cross-axis match, exactly-three match, five-or-more match triggering special award, no-match board
+- [X] T039 [P] Write unit tests for gravity engine in `tests/unit/gravity-engine.test.js`: cases for single gap, multi-gap column, full-column gap, spawn count equals gap count
+- [X] T040 [P] Write unit tests for scoring and special sweets in `tests/unit/scoring.test.js`: base points per clear count, cascade multiplier, row-clear effect cell count, column-clear effect cell count, same-type-clear effect cell count
+- [X] T041 [P] Write unit tests for progress store and migrations in `tests/unit/storage.test.js`: fresh install default, round-trip save and load, schema migration from v0 to current, corrupt-data fallback to default
+- [X] T042 Write Playwright e2e test for mobile match-turn flow in `tests/e2e/mobile-play.spec.js`: viewport 390×844, launch level 1, perform a valid swap, assert board updates; perform an invalid swap, assert board reverts
+- [X] T043 Write Playwright e2e test for persistence and offline in `tests/e2e/offline.spec.js`: complete level 1, reload page, assert progress restored; enable offline mode, reload, assert app-shell loads and level select appears
 - [ ] T044 Run manual quickstart validation scenarios from `specs/001-match-three-clone/quickstart.md` and confirm all checkpoints pass
 
 ---
@@ -140,7 +140,7 @@ Static web app: `index.html` at root, `src/` for modules, `public/` for hosted a
 - **US1 (Phase 3)**: Requires Phase 2 — no dependency on US2 or US3
 - **US2 (Phase 4)**: Requires Phase 2 — no dependency on US3; integrates with US1 engine
 - **US3 (Phase 5)**: Requires Phase 2 — integrates with US1 game controller and US2 level flow
-- **Polish (Phase N)**: Requires all desired user stories to be complete
+- **Polish (Phase 6)**: Requires all desired user stories to be complete
 
 ### User Story Dependencies
 

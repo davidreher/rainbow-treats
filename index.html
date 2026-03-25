@@ -10,8 +10,8 @@
   <title>Sweet Match</title>
 
   <link rel="manifest" href="public/manifest.webmanifest" />
-  <link rel="icon" href="public/icons/icon-192.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="public/icons/icon-192.svg" />
+  <link rel="icon" href="public/icons/icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="public/icons/icon-192.png" />
 
   <link rel="stylesheet" href="src/styles/base.css" />
   <link rel="stylesheet" href="src/styles/layout.css" />
@@ -63,7 +63,7 @@
     // Service worker registration — skipped if unsupported
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('src/pwa/service-worker.js')
+        navigator.serviceWorker.register('/src/pwa/service-worker.js', { scope: '/' })
           .catch(() => { /* offline capability unavailable — game still runs */ });
       });
     }
