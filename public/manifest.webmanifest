@@ -2,7 +2,7 @@
   "name": "Sweet Match",
   "short_name": "Sweet Match",
   "description": "A mobile-first match-three puzzle game with 50 levels",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#2d1b4e",
