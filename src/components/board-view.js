@@ -140,7 +140,18 @@ export class BoardView {
     }
 
     el.textContent = SWEET_EMOJI[sweetType] || '✦';
-    el.setAttribute('aria-label', sweetType + (specialType !== SpecialType.NONE ? ' special' : ''));
+    const isSpecial = specialType && specialType !== SpecialType.NONE;
+    const selected = state === TileState.SELECTED;
+    const label = [
+      sweetType,
+      isSpecial ? specialType : null,
+      `column ${tile.x + 1}`,
+      `row ${tile.y + 1}`,
+      selected ? 'selected' : null,
+    ].filter(Boolean).join(', ');
+
+    el.setAttribute('aria-label', label);
+    el.setAttribute('aria-selected', selected ? 'true' : 'false');
   }
 
   // ── Input handling (T017) ──────────────────────────────────────────────────

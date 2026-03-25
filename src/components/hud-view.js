@@ -18,6 +18,11 @@ export class HudView {
     const btnRetry = document.getElementById('btn-retry');
     const btnExit  = document.getElementById('btn-exit');
 
+    this._elLevel?.setAttribute('aria-live', 'polite');
+    this._elScore?.setAttribute('aria-live', 'polite');
+    this._elMoves?.setAttribute('aria-live', 'polite');
+    this._elTarget?.setAttribute('aria-live', 'polite');
+
     btnPause?.addEventListener('click', () => this._dispatch('hud-pause'));
     btnRetry?.addEventListener('click', () => this._dispatch('hud-retry'));
     btnExit?.addEventListener('click',  () => this._dispatch('hud-exit'));

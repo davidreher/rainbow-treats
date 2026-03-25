@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 4173",
-    "test:unit": "vitest run",
-    "test:unit:watch": "vitest",
-    "test:unit:coverage": "vitest run --coverage",
+    "test:unit": "vitest run tests/unit",
+    "test:unit:watch": "vitest tests/unit",
+    "test:unit:coverage": "vitest run tests/unit --coverage",
     "test:e2e": "playwright test",
-    "test": "vitest run && playwright test"
+    "test": "vitest run tests/unit && playwright test"
   },
   "devDependencies": {
     "vitest": "^2.1.0",
