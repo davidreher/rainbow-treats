@@ -65,6 +65,17 @@
 
 [Add more user stories as needed, each with an assigned priority]
 
+### Constitution Alignment *(mandatory)*
+
+- Describe how the feature remains deployable as static assets only.
+- Describe which user data is stored locally, why it belongs in `localStorage`,
+  and what happens if that storage is unavailable or cleared.
+- Describe the mobile-first interaction model, including the smallest supported
+  viewport for the primary journey.
+- Describe any PWA impact: manifest, installability, service worker, offline
+  behavior, or state recovery.
+- List every new external dependency. If none are needed, state that explicitly.
+
 ### Edge Cases
 
 <!--
@@ -89,11 +100,21 @@
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-006**: System MUST continue the primary user journey without requiring a
+  backend or server-rendered response after the initial asset load.
+- **FR-007**: System MUST define how local data is created, read, updated,
+  versioned, and recovered when `localStorage` is missing, full, or reset.
+- **FR-008**: System MUST provide a mobile-first interface and state any
+  breakpoint or layout assumptions required for the experience.
+- **FR-009**: System MUST state offline expectations for the feature, including
+  what is available before and after installation if PWA capabilities change.
+- **FR-010**: System MUST justify each external dependency against a simpler
+  browser-native or existing-tooling alternative.
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-011**: System MUST support [NEEDS CLARIFICATION: browser capability or device assumption not specified]
+- **FR-012**: System MUST retain local data for [NEEDS CLARIFICATION: retention or reset behavior not specified]
 
 ### Key Entities *(include if feature involves data)*
 
@@ -113,6 +134,12 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-005**: [Primary journey completes successfully on a mobile viewport without
+  relying on network calls beyond static asset retrieval]
+- **SC-006**: [Local persistence survives page reloads and reports storage failure
+  states without silent data loss]
+- **SC-007**: [Offline or installability behavior meets the user-visible outcome
+  defined in Constitution Alignment]
 
 ## Assumptions
 
@@ -126,3 +153,5 @@
 - [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
 - [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
 - [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+- [Assumption about browser support for `localStorage`, service workers, and other
+  required PWA APIs]

@@ -1,0 +1,151 @@
+/**
+ * board.css — CSS Grid board container and tile visual styles.
+ * Tile dimensions driven by --tile-size token; grid size from inline custom props.
+ */
+
+/* ── Board grid container ──────────────────────────────────────────────────── */
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--board-cols, 8), var(--tile-size));
+  grid-template-rows:    repeat(var(--board-rows, 8), var(--tile-size));
+  gap: var(--board-gap);
+  background: var(--color-surface-card);
+  border-radius: var(--ui-radius);
+  padding: var(--board-gap);
+  box-shadow: var(--shadow-card);
+  touch-action: none; /* captured by pointer events in JS */
+}
+
+/* ── Individual tile ───────────────────────────────────────────────────────── */
+.tile {
+  width:  var(--tile-size);
+  height: var(--tile-size);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--tile-size) * 0.55);
+  cursor: pointer;
+  position: relative;
+  box-shadow: var(--shadow-tile);
+  transition: transform var(--dur-swap) var(--ease-pop),
+              box-shadow 120ms ease;
+  will-change: transform, opacity;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Sweet-type colour fills ───────────────────────────────────────────────── */
+.tile--strawberry { background: radial-gradient(circle at 38% 35%, #ff6b6b, var(--color-strawberry)); }
+.tile--lemon      { background: radial-gradient(circle at 38% 35%, #fff176, var(--color-lemon)); }
+.tile--mint       { background: radial-gradient(circle at 38% 35%, #80e27e, var(--color-mint)); }
+.tile--grape      { background: radial-gradient(circle at 38% 35%, #ce93d8, var(--color-grape)); }
+.tile--blueberry  { background: radial-gradient(circle at 38% 35%, #64b5f6, var(--color-blueberry)); }
+.tile--orange     { background: radial-gradient(circle at 38% 35%, #ffcc80, var(--color-orange)); }
+.tile--cream      { background: radial-gradient(circle at 38% 35%, #fff8f0, var(--color-cream)); color: #7a5c40; }
+
+/* ── Tile state modifiers ──────────────────────────────────────────────────── */
+.tile--selected {
+  box-shadow: var(--shadow-selected);
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.tile--matched {
+  animation: tile-pop var(--dur-pop) var(--ease-pop) forwards;
+}
+
+.tile--falling {
+  animation: tile-fall var(--dur-fall) var(--ease-fall) forwards;
+}
+
+.tile--spawning {
+  animation: tile-spawn var(--dur-spawn) var(--ease-pop) forwards;
+}
+
+.tile--special {
+  box-shadow: 0 0 0 2px var(--color-special-glow), var(--shadow-tile);
+}
+
+/* ── Special sweet type overlays ───────────────────────────────────────────── */
+.tile--row-clear::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, var(--color-special-row), transparent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.tile--column-clear::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, transparent, var(--color-special-col), transparent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.tile--same-type-clear::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, var(--color-special-same), transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ── Locked / disabled tile (during resolution) ────────────────────────────── */
+.tile--locked,
+.board--resolving .tile {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ── Board resolution state ────────────────────────────────────────────────── */
+.board--resolving {
+  cursor: wait;
+}
+
+/* ── Level select button cards ─────────────────────────────────────────────── */
+.level-btn {
+  aspect-ratio: 1;
+  border-radius: var(--ui-radius);
+  background: var(--color-surface-tile);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-tile);
+  transition: transform 120ms ease, background 120ms ease;
+  cursor: pointer;
+  border: none;
+}
+
+.level-btn:active:not(:disabled) {
+  transform: scale(0.94);
+  background: var(--color-surface-hover);
+}
+
+.level-btn:disabled,
+.level-btn--locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.level-btn__num {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.level-btn__score {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}

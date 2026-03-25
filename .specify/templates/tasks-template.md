@@ -8,7 +8,9 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: The examples below include test tasks. Tests are OPTIONAL unless the
+feature specification or constitution requires validation for offline behavior,
+storage handling, accessibility, or other risk-prone flows.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -20,10 +22,9 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Static web app**: `src/`, `public/`, `tests/` at repository root
+- **Single project library/tool**: `src/`, `tests/`
+- Paths shown below assume a static web app - adjust based on plan.md structure
 
 <!-- 
   ============================================================================
@@ -49,8 +50,10 @@ description: "Task list template for feature implementation"
 **Purpose**: Project initialization and basic structure
 
 - [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
+- [ ] T002 Initialize [language] project with the minimum required dependencies
 - [ ] T003 [P] Configure linting and formatting tools
+- [ ] T004 [P] Create or update PWA shell assets in public/ (manifest, icons,
+  offline entry points as needed)
 
 ---
 
@@ -62,12 +65,15 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T005 Define local storage keys, versioning, and migration strategy
+- [ ] T006 [P] Implement storage access utilities with unavailable/full/reset
+  handling
+- [ ] T007 [P] Establish responsive layout primitives for the smallest supported
+  viewport
+- [ ] T008 Configure offline caching or service worker behavior required by the
+  plan
+- [ ] T009 Establish error and empty-state UX for offline and storage failure
+  scenarios
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -83,17 +89,17 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T010 [P] [US1] Integration test for the primary local-first user journey in tests/integration/[name].test.[ext]
+- [ ] T011 [P] [US1] Offline or storage-behavior test for the same journey in tests/integration/[name]-offline.test.[ext]
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T012 [P] [US1] Implement feature state model in src/app/[feature]/state.[ext]
+- [ ] T013 [P] [US1] Implement local storage persistence in src/storage/[feature].[ext]
+- [ ] T014 [US1] Implement primary mobile-first UI flow in src/components/[feature]/
+- [ ] T015 [US1] Integrate offline and recovery messaging in src/app/[feature]/[file].[ext]
+- [ ] T016 [US1] Add validation, empty states, and storage failure handling
+- [ ] T017 [US1] Update manifest or service worker hooks if the story changes installability or offline behavior
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -107,15 +113,15 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T018 [P] [US2] Integration test for the user journey in tests/integration/[name].test.[ext]
+- [ ] T019 [P] [US2] Responsive or accessibility-focused test for the same journey in tests/integration/[name]-responsive.test.[ext]
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T020 [P] [US2] Extend feature state or derived view model in src/app/[feature]/[file].[ext]
+- [ ] T021 [US2] Implement supporting UI flow in src/components/[feature]/
+- [ ] T022 [US2] Update storage integration or migration handling if needed
+- [ ] T023 [US2] Integrate with User Story 1 components while preserving independent testability
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -129,14 +135,14 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T024 [P] [US3] Integration test for the user journey in tests/integration/[name].test.[ext]
+- [ ] T025 [P] [US3] Installation, offline, or recovery-path test in tests/integration/[name]-install.test.[ext]
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T026 [P] [US3] Implement additional state or UI module in src/app/[feature]/[file].[ext]
+- [ ] T027 [US3] Implement the user-facing flow in src/components/[feature]/
+- [ ] T028 [US3] Update offline, installability, or recovery behavior touched by the story
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -155,6 +161,7 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX Performance optimization across all stories
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
+- [ ] TXXX Verify manifest, installability, and offline behavior after integration
 - [ ] TXXX Run quickstart.md validation
 
 ---
@@ -179,9 +186,8 @@ Examples of foundational tasks (adjust based on your project):
 ### Within Each User Story
 
 - Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
+- State and storage contracts before composed UI flows
+- Core implementation before offline/recovery refinement
 - Story complete before moving to next priority
 
 ### Parallel Opportunities
@@ -190,7 +196,7 @@ Examples of foundational tasks (adjust based on your project):
 - All Foundational tasks marked [P] can run in parallel (within Phase 2)
 - Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
 - All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
+- State, storage, and UI modules within a story marked [P] can run in parallel
 - Different user stories can be worked on in parallel by different team members
 
 ---
@@ -199,12 +205,12 @@ Examples of foundational tasks (adjust based on your project):
 
 ```bash
 # Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+Task: "Integration test for the primary journey in tests/integration/[name].test.[ext]"
+Task: "Offline or storage-behavior test in tests/integration/[name]-offline.test.[ext]"
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+# Launch independent implementation tasks for User Story 1 together:
+Task: "Implement feature state model in src/app/[feature]/state.[ext]"
+Task: "Implement local storage persistence in src/storage/[feature].[ext]"
 ```
 
 ---
@@ -245,7 +251,8 @@ With multiple developers:
 - [P] tasks = different files, no dependencies
 - [Story] label maps task to specific user story for traceability
 - Each user story should be independently completable and testable
+- Include offline, storage, and mobile-first validation tasks whenever a story touches those areas
 - Verify tests fail before implementing
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+- Avoid: vague tasks, same file conflicts, backend assumptions, and cross-story dependencies that break independence
